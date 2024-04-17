@@ -7,6 +7,8 @@ import me.kimhaming.springbootdeveloper.service.BlogService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -14,8 +16,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+// 단위 테스트 대상을 명시
+@WebMvcTest(BlogApiController.class)
 public class BlogApiControllerUnitTest {
 
+    // 테스트 대상을 명시적으로 초기화
+    @InjectMocks
     private BlogApiController blogApiController;
     private BlogService blogServiceMock;
 
