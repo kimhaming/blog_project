@@ -38,15 +38,10 @@ class BlogApiControllerTest {
     protected ObjectMapper objectMapper;    // 직렬화, 역직렬화를 위한 클래스
 
     @Autowired
-    private WebApplicationContext context;
-
-    @Autowired
     BlogRepository blogRepository;
 
     @BeforeEach
-    public void mockMvcSetup() {
-        this.mockMvc = MockMvcBuilders.webAppContextSetup(context)
-                .build();
+    public void setUp() {
         blogRepository.deleteAll();
     }
 
@@ -158,7 +153,7 @@ class BlogApiControllerTest {
         final String title = "title";
         final String content = "content";
 
-        // given: 블로그 글을 저장하고, 블로그 글 수정에 피룡한 요청 객체를 만든다
+        // given: 블로그 글을 저장하고, 블로그 글 수정에 필요한 요청 객체를 만든다
         Article savedArticle = blogRepository.save(Article.builder()
                 .title(title)
                 .content(content)
