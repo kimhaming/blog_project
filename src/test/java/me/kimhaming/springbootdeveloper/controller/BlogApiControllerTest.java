@@ -52,7 +52,12 @@ class BlogApiControllerTest {
         final String url = "/api/articles";
         final String title = "title";
         final String content = "content";
-        final AddArticleRequest userRequest = new AddArticleRequest(title, content);
+        final String email = "abcd123@gmail.com";
+        final String phoneNum = "01012345678";
+        final String author = "김자바";
+        final String password = "asdR!@012345";
+
+        final AddArticleRequest userRequest = new AddArticleRequest(title, content, email, phoneNum, author, password);
 
         // 객체 JSON으로 직렬화
         final String requestBody = objectMapper.writeValueAsString(userRequest);
