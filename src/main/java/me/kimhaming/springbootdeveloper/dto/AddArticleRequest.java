@@ -43,6 +43,10 @@ public class AddArticleRequest {
         return Article.builder()
                 .title(title)
                 .content(content)
+                .email(email)
+                .phoneNum(phoneNum)
+                .author(author)
+                .password(password)
                 .build();
     }
 }
