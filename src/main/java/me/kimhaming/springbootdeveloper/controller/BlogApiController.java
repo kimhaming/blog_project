@@ -1,5 +1,6 @@
 package me.kimhaming.springbootdeveloper.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import me.kimhaming.springbootdeveloper.domain.Article;
 import me.kimhaming.springbootdeveloper.dto.AddArticleRequest;
@@ -8,6 +9,7 @@ import me.kimhaming.springbootdeveloper.dto.UpdateArticleRequest;
 import me.kimhaming.springbootdeveloper.service.BlogService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,12 +22,13 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
+@Validated
 public class BlogApiController {
 
     private final BlogService blogService;
 
     @PostMapping("/api/articles")
-    public ResponseEntity<Article> addArticle(@RequestBody AddArticleRequest request) {
+    public ResponseEntity<Article> addArticle(@RequestBody @Valid AddArticleRequest request) {
         Article savedArticle = blogService.save(request);
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(savedArticle);
@@ -51,7 +54,7 @@ public class BlogApiController {
     }
 
     @DeleteMapping("api/articles/{id}")
-    public ResponseEntity<Void> delteArticle(@PathVariable long id) {
+    public ResponseEntity<Void> deleteArticle(@PathVariable long id) {
         blogService.delete(id);
 
         return ResponseEntity.ok()
