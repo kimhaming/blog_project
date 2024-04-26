@@ -1,11 +1,10 @@
-package me.kimhaming.springbootdeveloper.controller;
+package me.kimhaming.springbootdeveloper.unit.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import me.kimhaming.springbootdeveloper.controller.BlogApiController;
 import me.kimhaming.springbootdeveloper.domain.Article;
 import me.kimhaming.springbootdeveloper.dto.AddArticleRequest;
-import me.kimhaming.springbootdeveloper.dto.ArticleResponse;
 import me.kimhaming.springbootdeveloper.service.BlogService;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -13,9 +12,7 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
@@ -26,7 +23,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-// 단위 테스트 대상을 명시
+// 컨트롤러 단위 테스트일 때 사용하는 어노테이션
 @WebMvcTest(BlogApiController.class)
 public class BlogApiControllerUnitTest {
 
