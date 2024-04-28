@@ -27,14 +27,7 @@ public class BlogApiController {
 
     private final BlogService blogService;
 
-    @PostMapping("/api/articles")
-    public ResponseEntity<Article> addArticle(@RequestBody @Valid AddArticleRequest request) {
-        Article savedArticle = blogService.save(request);
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .body(savedArticle);
-    }
-
-    @GetMapping("api/articles")
+    @GetMapping("/api/articles")
     public ResponseEntity<List<ArticleResponse>> findAllArticles() {
         List<ArticleResponse> articles = blogService.findAll()
                 .stream()
@@ -45,7 +38,7 @@ public class BlogApiController {
                 .body(articles);
     }
 
-    @GetMapping("api/articles/{id}")
+    @GetMapping("/api/articles/{id}")
     public ResponseEntity<ArticleResponse> findArticle(@PathVariable long id) {
         Article article = blogService.findById(id);
         // article은 컬렉션 객체가 아니므로 스트림 사용 불가
@@ -53,15 +46,14 @@ public class BlogApiController {
                 .body(new ArticleResponse(article));
     }
 
-    @DeleteMapping("api/articles/{id}")
-    public ResponseEntity<Void> deleteArticle(@PathVariable long id) {
-        blogService.delete(id);
-
-        return ResponseEntity.ok()
-                .build();   // .builder() 로 시작하지 않고도 .build()를 사용하여 객체를 반환할 수 있다
+    @PostMapping("/api/articles")
+    public ResponseEntity<Article> addArticle(@RequestBody @Valid AddArticleRequest request) {
+        Article savedArticle = blogService.save(request);
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(savedArticle);
     }
 
-    @PutMapping("api/articles/{id}")
+    @PutMapping("/api/articles/{id}")
     public ResponseEntity<Article> updateArticle(@PathVariable long id,
                                                  @RequestBody UpdateArticleRequest request) {
         Article updatedArticle = blogService.update(id, request);
@@ -69,4 +61,13 @@ public class BlogApiController {
         return ResponseEntity.ok()
                 .body(updatedArticle);
     }
+
+    @DeleteMapping("/api/articles/{id}")
+    public ResponseEntity<Void> deleteArticle(@PathVariable long id) {
+        blogService.delete(id);
+
+        return ResponseEntity.ok()
+                .build();   // .builder() 로 시작하지 않고도 .build()를 사용하여 객체를 반환할 수 있다
+    }
+
 }
