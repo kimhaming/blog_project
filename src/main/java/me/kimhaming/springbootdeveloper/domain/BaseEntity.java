@@ -20,12 +20,12 @@ import java.time.LocalDateTime;
 // 모든 엔티티에 의해 확장될 기본 클래스 지정
 @MappedSuperclass
 public class BaseEntity {
-//    @CreatedDate
+    // @CreatedDate
     // Hibernate 제공 어노테이션
     @CreationTimestamp
     @Column(updatable = false)
     private LocalDateTime createdAt;
-//    @LastModifiedDate
+    //    @LastModifiedDate
     // Hibernate 제공 어노테이션
     @UpdateTimestamp
     @Column
