@@ -53,7 +53,7 @@ public class BlogApiControllerUnitTest {
                     "email@google.com",
                     "010-1234-5678",
                     "testAuthor",
-                    "asdR!@012345"
+                    "asdR!@12345"
             );
 
             String requestBody = objectMapper.writeValueAsString(request);
@@ -97,7 +97,7 @@ public class BlogApiControllerUnitTest {
                     "email@google.com",
                     "010-1234-5678",
                     "testAuthor",
-                    "asdR@0123"
+                    "asdf1234"
             );
 
             String requestBody = objectMapper.writeValueAsString(request);
