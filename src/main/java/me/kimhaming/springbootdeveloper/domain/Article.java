@@ -6,10 +6,11 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.AccessLevel;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
+@SuperBuilder
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -45,7 +46,6 @@ public class Article extends BaseEntity {
     // 빌더를 생성하는 기능 제공
     // 소스 레벨에서만 유지, 컴파일 후에는 제거
     // 컴파일 시에 코드 생성하고 생성된 코드가 클래스 파일에 포함
-    @Builder
     public Article(String title, String content, String email, String phoneNum, String author, String password) {
         this.title = title;
         this.content = content;
