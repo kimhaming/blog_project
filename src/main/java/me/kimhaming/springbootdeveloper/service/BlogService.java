@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.Period;
 import java.util.List;
 
@@ -59,10 +58,13 @@ public class BlogService {
         if (daysSinceCreated <= 9) {
             article.update(request.getTitle(), request.getContent());
             // 9일 전이라면 1일 후 수정을 못한다는 메시지 함께 반환
-        } else if (daysSinceCreated == 9) {
+        }
+
+        if (daysSinceCreated == 9) {
             throw new IllegalArgumentException("하루가 지나면 이 게시물을 편집할 수 없습니다.");
+
             // 10일 전이라면 수정 불가하도록
-        } else {
+        } else if(daysSinceCreated > 9) {
             throw new IllegalArgumentException("생성일자로부터 10일이 경과되어 편집이 불가능합니다.");
         }
 
