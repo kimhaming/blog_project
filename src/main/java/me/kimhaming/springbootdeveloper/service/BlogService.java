@@ -7,6 +7,8 @@ import me.kimhaming.springbootdeveloper.dto.AddArticleRequest;
 import me.kimhaming.springbootdeveloper.dto.UpdateArticleRequest;
 import me.kimhaming.springbootdeveloper.repository.BlogRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -27,6 +29,12 @@ public class BlogService {
     // 블로그 글 전체 조회 메소드
     public List<Article> findAll() {
         return blogRepository.findAll();
+    }
+
+    // createdAt 기준 페이지네이션
+    @Transactional
+    public Page<Article> getArticlesSortedByCreatedAt(Pageable pageable) {
+        return blogRepository.findAll(pageable);
     }
 
     // 블로그 글 단일 조회 메소드
