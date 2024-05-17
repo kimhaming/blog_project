@@ -6,6 +6,7 @@ import jakarta.persistence.MappedSuperclass;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -14,6 +15,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import java.time.LocalDateTime;
 @SuperBuilder
 @Getter
+@Setter
 @EntityListeners(AuditingEntityListener.class)
 // 모든 엔티티에 의해 확장될 기본 클래스 지정
 @MappedSuperclass
@@ -30,4 +32,7 @@ public class BaseEntity {
     @UpdateTimestamp
     @Column
     private LocalDateTime updatedAt;
+
+    @Column
+    private LocalDateTime deletedAt;
 }

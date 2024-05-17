@@ -47,7 +47,7 @@ public class BlogApiController {
         Pageable pageable = PageRequest.of(page, size, direction, "createdAt");
 
         // 서비스 레이어 호출
-        Page<Article> articlesPage = blogService.getArticlesSortedByCreatedAt(pageable);
+        Page<Article> articlesPage = blogService.getNonDeletedArticlesSortedByCreatedAt(pageable);
 
         // 엔티티 타입의 페이지 객체를 responseDTO 타입의 리스트로 파싱한다
         List<ArticleResponse> articles = articlesPage.getContent()
@@ -84,8 +84,14 @@ public class BlogApiController {
     }
 
     @DeleteMapping("/api/articles/{id}")
-    public ResponseEntity<Void> deleteArticle(@PathVariable long id) {
-        blogService.delete(id);
+    public ResponseEntity<Void> deleteArticle(@PathVariable long id,
+                                              @RequestParam(name = "softDelete", defaultValue = "true") boolean isSoftDelete) {
+
+        if (isSoftDelete) {
+            blogService.softDelete(id);
+        } else {
+            blogService.delete(id);
+        }
 
         return ResponseEntity.ok()
                 .build();   // .builder() 로 시작하지 않고도 .build()를 사용하여 객체를 반환할 수 있다

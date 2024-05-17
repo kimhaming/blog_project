@@ -12,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.Period;
 import java.util.List;
 
@@ -33,8 +34,8 @@ public class BlogService {
 
     // createdAt 기준 페이지네이션
     @Transactional
-    public Page<Article> getArticlesSortedByCreatedAt(Pageable pageable) {
-        return blogRepository.findAll(pageable);
+    public Page<Article> getNonDeletedArticlesSortedByCreatedAt(Pageable pageable) {
+        return blogRepository.findByDeletedAtIsNull(pageable);
     }
 
     // 블로그 글 단일 조회 메소드
@@ -43,7 +44,18 @@ public class BlogService {
                 .orElseThrow(() -> new IllegalArgumentException("not found: " + id));
     }
 
-    // 블로그 글 삭제 메소드
+    // 글 deletedAt 생성 메소드
+    public void softDelete(long id) {
+        Article article = blogRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("not found: " + id));
+
+        // deletedAt 생성하기
+        article.setDeletedAt(LocalDateTime.now());
+
+        blogRepository.save(article);
+    }
+
+    // 블로그 글 DB 삭제 메소드
     public void delete(long id) {
         blogRepository.deleteById(id);
     }
