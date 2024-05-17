@@ -8,9 +8,9 @@ import me.kimhaming.springbootdeveloper.dto.ArticleResponse;
 import me.kimhaming.springbootdeveloper.dto.UpdateArticleRequest;
 import me.kimhaming.springbootdeveloper.service.BlogService;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -32,12 +32,21 @@ public class BlogApiController {
 
     private final BlogService blogService;
 
+    // 전체 조회 시
     @GetMapping("/api/articles")
     public ResponseEntity<List<ArticleResponse>> findAllArticles(
             // 이러한 디폴트값을 가지고 있는 Pageable 객체를 입력받는다
-            @PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.DESC) Pageable pageable
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "desc") String sortDirection
     ) {
-        // 해당 객체를 createdAt 순으로 정렬하는 메서드를 거쳐 엔티티 타입의 페이지로 감싼다
+        // 사용자의 요청에 의해 오름차순 및 내림차순 선택 정렬
+        Sort.Direction direction = sortDirection.equalsIgnoreCase("asc") ? Sort.Direction.ASC : Sort.Direction.DESC;
+
+        // Pageable 객체 생성
+        Pageable pageable = PageRequest.of(page, size, direction, "createdAt");
+
+        // 서비스 레이어 호출
         Page<Article> articlesPage = blogService.getArticlesSortedByCreatedAt(pageable);
 
         // 엔티티 타입의 페이지 객체를 responseDTO 타입의 리스트로 파싱한다
