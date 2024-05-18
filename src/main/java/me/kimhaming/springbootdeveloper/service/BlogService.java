@@ -90,4 +90,15 @@ public class BlogService {
 
         return article;
     }
+
+    public Page<Article> findByTitle(Pageable pageable, String keyword) {
+        Page<Article> articles = blogRepository.findByTitleContaining(keyword, pageable);
+
+        // 검색 결과가 없다면
+        if (articles.isEmpty()) {
+            throw new IllegalArgumentException("검색 결과가 없습니다.");
+        }
+
+        return articles;
+    }
 }

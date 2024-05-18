@@ -13,7 +13,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,7 +26,6 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
-@Validated
 public class BlogApiController {
 
     private final BlogService blogService;
@@ -95,6 +93,27 @@ public class BlogApiController {
 
         return ResponseEntity.ok()
                 .build();   // .builder() 로 시작하지 않고도 .build()를 사용하여 객체를 반환할 수 있다
+    }
+
+    // 게시글 제목 기준 검색 api
+    @GetMapping("/api/search")
+    public ResponseEntity<List<Article>> getArticlesByTitle(@RequestParam(defaultValue = "0") int page,
+                                                            @RequestParam(defaultValue = "10") int size,
+                                                            @RequestParam(name = "search_keyword", required = false) String keyword) {
+        Pageable pageable;
+
+        if (keyword != null & !keyword.isEmpty()) {
+            pageable = PageRequest.of(page, size);
+        } else {
+            // 검색어가 없는 경우
+            pageable = PageRequest.of(page, size, Sort.by("createdAt").descending());
+        }
+
+        Page<Article> articlePage = blogService.findByTitle(pageable, keyword);
+
+        List<Article> articles = articlePage.getContent();
+        return ResponseEntity.ok()
+                .body(articles);
     }
 
 }
