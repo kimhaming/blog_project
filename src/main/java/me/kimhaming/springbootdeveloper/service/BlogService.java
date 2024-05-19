@@ -23,12 +23,12 @@ public class BlogService {
     private BlogRepository blogRepository;
 
     // 블로그 글 추가 메소드
-    public Article save(AddArticleRequest request) {
+    public Article createArticle(AddArticleRequest request) {
         return blogRepository.save(request.toEntity());
     }
 
     // 블로그 글 전체 조회 메소드
-    public List<Article> findAll() {
+    public List<Article> getAllArticles() {
         return blogRepository.findAll();
     }
 
@@ -45,7 +45,7 @@ public class BlogService {
     }
 
     // 글 deletedAt 생성 메소드
-    public void softDelete(long id) {
+    public void softDeleteArticleById(long id) {
         Article article = blogRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("not found: " + id));
 
@@ -56,7 +56,7 @@ public class BlogService {
     }
 
     // 블로그 글 DB 삭제 메소드
-    public void delete(long id) {
+    public void hardDeleteArticleById(long id) {
         blogRepository.deleteById(id);
     }
 

@@ -32,7 +32,7 @@ public class BlogApiController {
 
     // 전체 조회 시
     @GetMapping("/api/articles")
-    public ResponseEntity<List<ArticleResponse>> findAllArticles(
+    public ResponseEntity<List<ArticleResponse>> getAllArticles(
             // 이러한 디폴트값을 가지고 있는 Pageable 객체를 입력받는다
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
@@ -58,7 +58,7 @@ public class BlogApiController {
     }
 
     @GetMapping("/api/articles/{id}")
-    public ResponseEntity<ArticleResponse> findArticle(@PathVariable long id) {
+    public ResponseEntity<ArticleResponse> getArticleById(@PathVariable long id) {
         Article article = blogService.findById(id);
         // article은 컬렉션 객체가 아니므로 스트림 사용 불가
         return ResponseEntity.ok()
@@ -66,8 +66,8 @@ public class BlogApiController {
     }
 
     @PostMapping("/api/articles")
-    public ResponseEntity<Article> addArticle(@RequestBody @Valid AddArticleRequest request) {
-        Article savedArticle = blogService.save(request);
+    public ResponseEntity<Article> createdArticle(@RequestBody @Valid AddArticleRequest request) {
+        Article savedArticle = blogService.createArticle(request);
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(savedArticle);
     }
@@ -86,9 +86,9 @@ public class BlogApiController {
                                               @RequestParam(name = "softDelete", defaultValue = "true") boolean isSoftDelete) {
 
         if (isSoftDelete) {
-            blogService.softDelete(id);
+            blogService.softDeleteArticleById(id);
         } else {
-            blogService.delete(id);
+            blogService.hardDeleteArticleById(id);
         }
 
         return ResponseEntity.ok()

@@ -22,7 +22,7 @@ public class BlogViewController {
     @GetMapping("/articles")
     // Model: 뷰로 데이터를 넘겨주는 모델 객체
     public String getArticles(Model model) {
-        List<ArticleListViewResponse> articles = blogService.findAll().stream()
+        List<ArticleListViewResponse> articles = blogService.getAllArticles().stream()
                 .map(ArticleListViewResponse::new)
                 .toList();
         model.addAttribute("articles", articles);   // 블로그 글 리스트 저장

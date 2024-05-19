@@ -73,7 +73,7 @@ public class BlogApiControllerUnitTest {
             // BDDMockito의 given() 메소드
             // any()에 해당하는 메소드 파라미터 형식으로
             // given()에 해당하는 메소드가 실행되었을 때, willReturn() 에 해당하는 값을 반환한다
-            given(blogService.save(Mockito.any(AddArticleRequest.class))).willReturn(response);
+            given(blogService.createArticle(Mockito.any(AddArticleRequest.class))).willReturn(response);
 
             // when: 설정한 내용을 바탕으로 요청 전송
             ResultActions result = mockMvc.perform(post("/api/articles")
