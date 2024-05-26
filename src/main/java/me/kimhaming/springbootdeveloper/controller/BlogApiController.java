@@ -1,5 +1,6 @@
 package me.kimhaming.springbootdeveloper.controller;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import me.kimhaming.springbootdeveloper.domain.Article;
@@ -24,6 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+@Tag(name = "blog", description = "게시글 API")
 @RequiredArgsConstructor
 @RestController
 public class BlogApiController {

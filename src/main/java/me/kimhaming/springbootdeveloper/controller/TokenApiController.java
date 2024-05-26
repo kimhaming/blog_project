@@ -1,5 +1,6 @@
 package me.kimhaming.springbootdeveloper.controller;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import me.kimhaming.springbootdeveloper.dto.CreateAccessTokenRequest;
 import me.kimhaming.springbootdeveloper.dto.CreateAccessTokenResponse;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+@Tag(name = "token", description = "토큰 API")
 @RequiredArgsConstructor
 @RestController
 public class TokenApiController {
