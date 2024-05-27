@@ -1,6 +1,7 @@
 package me.kimhaming.springbootdeveloper.service;
 
 import lombok.RequiredArgsConstructor;
+import me.kimhaming.springbootdeveloper.config.jwt.TokenProvider;
 import me.kimhaming.springbootdeveloper.domain.User;
 import org.springframework.stereotype.Service;
 
@@ -9,7 +10,7 @@ import java.time.Duration;
 @RequiredArgsConstructor
 @Service
 public class TokenService {
-    private final TokenService tokenProvider;
+    private final TokenProvider tokenProvider;
     private final RefreshTokenService refreshTokenService;
     private final UserService userService;
 
@@ -21,4 +22,5 @@ public class TokenService {
         Long userId = refreshTokenService.findByRefreshToken(refreshToken).getUserId();
         User user = userService.findById(userId);
         return tokenProvider.generateToken(user, Duration.ofHours(2));
+    }
 }
