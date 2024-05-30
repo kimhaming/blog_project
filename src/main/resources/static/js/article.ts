@@ -1,9 +1,9 @@
 // 삭제 기능
-const deleteButton = document.getElementById('delete-btn');
+const deleteButton = document.getElementById('delete-btn') as HTMLButtonElement;
 
 if (deleteButton) {
     deleteButton.addEventListener('click', event => {
-        let id = document.getElementById('article-id').value;
+        let id = (document.getElementById('article-id') as HTMLInputElement).value;
         fetch(`/api/articles/${id}`, {
             method: 'DELETE'
         })
@@ -16,12 +16,12 @@ if (deleteButton) {
 
 // 수정 기능
 // id가 modify-btn인 엘리먼트 조회
-const modifyButton = document.getElementById('modify-btn');
+const modifyButton = document.getElementById('modify-btn') as HTMLButtonElement;
 
 if (modifyButton) {
     modifyButton.addEventListener('click', event => {
-        let params = URLSearchParams(location.search);
-        let id = params.get('id');
+        const params = new URLSearchParams(location.search);
+        const id = params.get('id');
 
         fetch(`/api/articles/${id}`, {
             method: 'PUT',
@@ -29,8 +29,8 @@ if (modifyButton) {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
-                title: document.getElementById('title').value,
-                content: document.getElementById('content').value
+                title: (document.getElementById('title') as HTMLInputElement).value,
+                content: (document.getElementById('content')as HTMLInputElement).value
             })
         })
             .then(() => {
@@ -42,7 +42,7 @@ if (modifyButton) {
 
 // 등록 기능
 // id가 create-btn인 엘리먼트
-const createButton = document.getElementById('create-btn');
+const createButton = document.getElementById('create-btn') as HTMLButtonElement;
 
 if (createButton) {
     createButton.addEventListener("click", (event) => {
@@ -52,8 +52,8 @@ if (createButton) {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
-                title: document.getElementById("title").value,
-                content: document.getElementById("content").value,
+                title: (document.getElementById("title") as HTMLInputElement).value,
+                content: (document.getElementById("content") as HTMLInputElement).value,
             }),
         }).then(() => {
             alert("등록 완료되었습니다.");
