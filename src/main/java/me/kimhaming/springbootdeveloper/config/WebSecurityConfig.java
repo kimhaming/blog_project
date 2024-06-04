@@ -35,7 +35,7 @@ public class WebSecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http
                 .authorizeRequests()    // 3. 인증, 인가 설정: 특정 경로를 지정하여 액세스 설정하기 시작
-                .requestMatchers("/login", "/signup", "/user").permitAll()
+                .requestMatchers("/login", "/signup", "/user", "/api/articles").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()    // 4. 폼 기반 로그인 설정
