@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
@@ -39,12 +40,13 @@ public class BlogApiControllerUnitTest {
     MockMvc mockMvc;
 
     @Nested
-    @DisplayName("addArticle 테스트")
-    class AddArticleTest {
+    @DisplayName("createArticle 테스트")
+    class CreateArticleTest {
 
         @DisplayName("블로그 글 추가에 성공한다.")
         @Test
-        public void addArticle() throws Exception {
+        @WithMockUser   // 로그인한 사용자를 위한 시뮬레이션
+        public void createArticle() throws Exception {
             // given
             // 입력값(요청값, 컨트롤러의 파라미터)
             AddArticleRequest request = new AddArticleRequest(
