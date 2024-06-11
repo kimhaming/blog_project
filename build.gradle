@@ -38,6 +38,9 @@ repositories {
         // 스프링 시큐리티를 테스트하기 위한 의존성 추가
         testImplementation 'org.springframework.security:spring-security-test'
 
+        // MySQL JDBC 드라이버 추가
+        runtimeOnly 'mysql:mysql-connector-java'
+
         testAnnotationProcessor 'org.projectlombok:lombok'
         testImplementation 'org.projectlombok:lombok'
         implementation 'io.jsonwebtoken:jjwt:0.9.1' // 자바 JWT 라이브러리
