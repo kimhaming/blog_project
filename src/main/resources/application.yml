@@ -8,7 +8,7 @@ spring:
     # 테이블 생성 후에 .sql 파일 실행
     defer-datasource-initialization: true
   datasource:
-    url: jdbc:mysql://database-1.cymwmpm0yhqt.ap-northeast-2.rds.amazonaws.com:3306/${RDS_MYSQL_NAME}
+    url: jdbc:mysql://${RDS_MYSQL_URL}:3306/${RDS_MYSQL_NAME}
     username: ${RDS_MYSQL_USERNAME}
     password: ${RDS_MYSQL_PASSWORD}
     driver-class-name: com.mysql.cj.jdbc.Driver

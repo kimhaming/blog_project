@@ -1,0 +1,17 @@
+# 도커 컴포즈 내용
+version: '3'
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    working_dir: /app
+    container_name: spring
+    environment:
+      SPRING_DATASOURCE_URL: ${RDS_MYSQL_URL}
+      SPRING_DATASOURCE_USERNAME: ${RDS_MYSQL_USERNAME}
+      SPRING_DATASOURCE_PASSWORD: ${RDS_MYSQL_PASSWORD}
+    ports:
+      - "8080:8080"
+    restart: always
