@@ -1,44 +1,12 @@
 spring:
-  jpa:
-    database: mysql
-    database-platform: org.hibernate.dialect.MySQL8Dialect
-    # 전송 쿼리 확인
-    hibernate:
-      ddl-auto: none
-    properties:
-      hibernate:
-        format_sql: true
-        show-sql: true
-        highlight_sql: true
-
-    # 테이블 생성 후에 .sql 파일 실행
-    defer-datasource-initialization: true
-  datasource:
-    url: jdbc:mysql://${RDS_MYSQL_URL}:3306/${RDS_MYSQL_NAME}
-    username: ${RDS_MYSQL_USERNAME}
-    password: ${RDS_MYSQL_PASSWORD}
-    driver-class-name: com.mysql.cj.jdbc.Driver
-jwt:
-  issuer: ajufresh@gmail.com
-  secret_key: study-springboot
-
-# ==================
-#spring:
-#  jpa:
-#    # 전송 쿼리 확인
-#    hibernate:
-#      ddl-auto: create
-#    properties:
-#      hibernate:
-#        format_sql: true
-#        show-sql: true
-#        highlight_sql: true
-#    # 테이블 생성 후에 .sql 파일 실행
-#    defer-datasource-initialization: true
-#    database: mysql
-#    database-platform: org.hibernate.dialect.MySQL8Dialect
-#  datasource:
-#    driver-class-name: com.mysql.cj.jdbc.Driver
-#    url: jdbc:mysql://localhost:3306/testdb?useSSL=false&useUnicode=true&serverTimezone=Asia/Seoul
-#    username: root
-#    password: 1260
+  profiles:
+    active: dev
+  h2:
+    console:
+      enabled: true
+      path: /h2-console/**
+logging:
+  level:
+    org:
+      springframework:
+        security: DEBUG
