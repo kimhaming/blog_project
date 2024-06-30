@@ -28,12 +28,12 @@ import java.util.List;
 
 @Tag(name = "blog", description = "게시글 API")
 @RequiredArgsConstructor
-@RestController
+@RestController("/api")
 public class BlogApiController {
 
     private final BlogService blogService;
 
-    @GetMapping("/api/articles")
+    @GetMapping("/articles")
     @Operation(summary = "전체 게시글 조회", description = "등록된 모든 게시글을 조회합니다.")
     public ResponseEntity<List<ArticleResponse>> getAllArticles(
             // 이러한 디폴트값을 가지고 있는 Pageable 객체를 입력받는다
@@ -60,7 +60,7 @@ public class BlogApiController {
                 .body(articles);
     }
 
-    @GetMapping("/api/articles/{id}")
+    @GetMapping("/articles/{id}")
     @Operation(summary = "특정 게시글 조회", description = "ID로 식별된 특정 게시글의 세부 정보를 조회합니다.")
     public ResponseEntity<ArticleResponse> getArticleById(@PathVariable long id) {
         Article article = blogService.findById(id);
@@ -69,7 +69,7 @@ public class BlogApiController {
                 .body(new ArticleResponse(article));
     }
 
-    @PostMapping("/api/articles")
+    @PostMapping("/articles")
     @Operation(summary = "게시글 등록", description = "사용자의 입력 정보를 받아서 게시물을 신규 등록합니다.")
     public ResponseEntity<Article> createdArticle(@RequestBody @Valid AddArticleRequest request) {
         Article savedArticle = blogService.createArticle(request);
@@ -77,7 +77,7 @@ public class BlogApiController {
                 .body(savedArticle);
     }
 
-    @PutMapping("/api/articles/{id}")
+    @PutMapping("/articles/{id}")
     @Operation(summary = "게시글 수정", description = "ID로 식별된 특정 게시글의 전체 내용을 입력받아서 수정합니다.")
     public ResponseEntity<Article> updateArticle(@PathVariable long id,
                                                  @RequestBody UpdateArticleRequest request) {
@@ -103,7 +103,7 @@ public class BlogApiController {
     }
 
     // 게시글 제목 기준 검색 api
-    @GetMapping("/api/search")
+    @GetMapping("/search")
     @Operation(summary = "게시글 검색", description = "게시글 제목에 특정 키워드가 포함된 게시글을 검색합니다. 최소 한 글자 이상의 검색어를 입력해야 합니다.")
     public ResponseEntity<List<Article>> getArticlesByTitle(@RequestParam(defaultValue = "0") int page,
                                                             @RequestParam(defaultValue = "10") int size,
