@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import me.kimhaming.springbootdeveloper.domain.User;
 import me.kimhaming.springbootdeveloper.dto.AddUserRequest;
 import me.kimhaming.springbootdeveloper.repository.UserRepository;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -15,11 +16,18 @@ public class UserService {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     public Long save(AddUserRequest dto) {
-        return userRepository.save(User.builder()
+        // 이메일 중복 체크
+        if (userRepository.findByEmail(dto.getEmail()).isPresent()) {
+            throw new DataIntegrityViolationException("이미 있는 이메일입니다.");
+        }
+
+        // 회원 저장
+        User user = User.builder()
                 .email(dto.getEmail())
-                // 1. 패스워드 암호화
                 .password(bCryptPasswordEncoder.encode(dto.getPassword()))
-                .build()).getId();
+                .build();
+
+        return userRepository.save(user).getId();
     }
 
     public User findById(Long userId) {
