@@ -5,7 +5,10 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
@@ -29,30 +32,19 @@ public class Article extends BaseEntity {
     @Column(name = "content", nullable = false)
     private String content;
 
-    @Column(nullable = false)
-    private String email;
-
-    @Column
-    private String phoneNum;
-
-    @Column(nullable = false)
-    private String author;
-
-    @Column(nullable = false)
-    // 대소문자 영문 포함, 특정 문자 중 최소 2개 이상 포함, 숫자 최소 5개 이상 포함
-    private String password;
+    @ManyToOne
+    @JoinColumn(name = "USER_ID", nullable = false)
+    private User user;
 
     // 롬복 어노테이션
     // 빌더를 생성하는 기능 제공
     // 소스 레벨에서만 유지, 컴파일 후에는 제거
     // 컴파일 시에 코드 생성하고 생성된 코드가 클래스 파일에 포함
-    public Article(String title, String content, String email, String phoneNum, String author, String password) {
+    @Builder
+    public Article(String title, String content, User user) {
         this.title = title;
         this.content = content;
-        this.email = email;
-        this.phoneNum = phoneNum;
-        this.author = author;
-        this.password = password;
+        this.user = user;
     }
 
     public void update(String title, String content) {
